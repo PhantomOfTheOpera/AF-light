@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/AF-light.js"></script>
+    <script>
+        var form_test = {
+            validate: function() {
+                if (document.querySelector('#test input.active').value == '') {
+                    alert('validation failed');
+                    return false;
+                }
+            },
+            success: function(response) {
+                console.log('It does really work' + responce);
+            },
+            error: function (response) {
+                console.log('such an error');
+            }
+        };
+    </script>
+</head>
+<body>
+    <form id="test" class="ajax_form" url="/index.php" method="post">
+        <input class="active" value="" placeholder="Поле" name="test-i">
+        <textarea class="active" placeholder="Поле" name="test-t"></textarea>
+        <input type="submit" value="Отправить">
+    </form>
+</body>
+</html>
