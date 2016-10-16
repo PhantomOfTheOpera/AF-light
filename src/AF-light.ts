@@ -1,8 +1,6 @@
 /**
  * Created by killer on 02/10/16.
  */
-
-
 class Ajax {
     constructor(object : {
         method: string,
@@ -30,19 +28,22 @@ window.onload = function() {
     for (let i : number = 0; i < forms.length; i++) {
         (<HTMLFormElement>forms[i]).onsubmit = function(event) { // listener
             event.preventDefault();
-            let inputs : NodeListOf<HTMLInputElement> = this.querySelectorAll('input.active, textarea.active');
+            let inputs : NodeListOf<HTMLInputElement> = this.querySelectorAll('input, textarea');
             let query : string = '';
             let form : HTMLFormElement = this;
+            let token : string= (document.querySelector('token') == null) ?
+                'false' : document.querySelector('token').innerHTML;
             if (typeof window['form_' + form.id]['validate'] != "undefined") {
                 if (window['form_' + form.id]['validate'](form) === false)
-                    return;
+                    return false;
             }
-            for (var i : number = 0; i < inputs.length; i++)
-                query += inputs[i].getAttribute('name') + '=' +  inputs[i].value + '&';
-            query = query.slice(0, -1);
+            for (let i : number = 0; i < inputs.length; i++)
+                query += (inputs[i].getAttribute('name') == null) ?
+                    '' : inputs[i].getAttribute('name') + '=' +  encodeURI(inputs[i].value) + '&';
+            query += 'token=' + encodeURI(token);
             new Ajax({
-                method: this.getAttribute('method'),
-                url: this.getAttribute('url'),
+                method: form.getAttribute('method'),
+                url: form.getAttribute('url'),
                 data: query,
                 success: function(responce) {
                     window['form_' + form.id]['success'](responce);
