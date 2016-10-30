@@ -30,11 +30,12 @@ window.onload = function() {
             event.preventDefault();
             let inputs : NodeListOf<HTMLInputElement> = this.querySelectorAll('input, textarea');
             let query : string = '';
+            let obj_name : string = 'form_' + this.getAttribute('id');
             let form : HTMLFormElement = this;
             let token : string= (document.querySelector('token') == null) ?
                 'false' : document.querySelector('token').innerHTML;
-            if (typeof window['form_' + form.id]['validate'] != "undefined") {
-                if (window['form_' + form.id]['validate'](form) === false)
+            if (typeof window[obj_name]['validate'] != "undefined") {
+                if (window[obj_name]['validate'](form) === false)
                     return false;
             }
             for (let i : number = 0; i < inputs.length; i++)
@@ -46,10 +47,10 @@ window.onload = function() {
                 url: form.getAttribute('url'),
                 data: query,
                 success: function(responce) {
-                    window['form_' + form.id]['success'](responce);
+                    window[obj_name]['success'](responce);
                 },
                 error: function(responce){
-                    window['form_' + form.id]['error'](responce);
+                    window[obj_name]['error'](responce);
                 }
             });
         }
