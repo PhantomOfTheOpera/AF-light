@@ -18,7 +18,7 @@ var Ajax = (function () {
     }
     return Ajax;
 }());
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", function () {
     var forms = document.querySelectorAll('form.ajax_form');
     for (var i = 0; i < forms.length; i++) {
         forms[i].onsubmit = function (event) {
@@ -50,5 +50,5 @@ window.onload = function () {
             });
         };
     }
-};
+});
 //# sourceMappingURL=AF-light.js.map

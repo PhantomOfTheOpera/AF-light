@@ -18,18 +18,19 @@ var Ajax = (function () {
     }
     return Ajax;
 }());
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", function () {
     var forms = document.querySelectorAll('form.ajax_form');
     for (var i = 0; i < forms.length; i++) {
         forms[i].onsubmit = function (event) {
             event.preventDefault();
             var inputs = this.querySelectorAll('input, textarea');
             var query = '';
+            var obj_name = 'form_' + this.getAttribute('id');
             var form = this;
             var token = (document.querySelector('token') == null) ?
                 'false' : document.querySelector('token').innerHTML;
-            if (typeof window['form_' + form.id]['validate'] != "undefined") {
-                if (window['form_' + form.id]['validate'](form) === false)
+            if (typeof window[obj_name]['validate'] != "undefined") {
+                if (window[obj_name]['validate'](form) === false)
                     return false;
             }
             for (var i_1 = 0; i_1 < inputs.length; i_1++)
@@ -41,13 +42,13 @@ window.onload = function () {
                 url: form.getAttribute('url'),
                 data: query,
                 success: function (responce) {
-                    window['form_' + form.id]['success'](responce);
+                    window[obj_name]['success'](responce);
                 },
                 error: function (responce) {
-                    window['form_' + form.id]['error'](responce);
+                    window[obj_name]['error'](responce);
                 }
             });
         };
     }
-};
+});
 //# sourceMappingURL=AF-light.js.map

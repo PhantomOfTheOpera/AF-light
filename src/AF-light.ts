@@ -2,13 +2,15 @@
  * Created by killer on 02/10/16.
  */
 class Ajax {
-    constructor(object : {
-        method: string,
-        url: string,
-        data: string,
-        success: (response:string)=>void,
-        error: (response:string)=>void
-    }) {
+    constructor(
+        object : {
+            method: string,
+            url: string,
+            data: string,
+            success: (response:string)=>void,
+            error: (response:string)=>void
+        }
+    ) {
         let xhr : XMLHttpRequest = new XMLHttpRequest();
         xhr.open(object.method, object.url, true);
         xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -23,7 +25,7 @@ class Ajax {
         }
     }
 }
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function() {
     let forms : NodeList = document.querySelectorAll('form.ajax_form');
     for (let i : number = 0; i < forms.length; i++) {
         (<HTMLFormElement>forms[i]).onsubmit = function(event) { // listener
@@ -55,4 +57,4 @@ window.onload = function() {
             });
         }
     }
-};
+});
